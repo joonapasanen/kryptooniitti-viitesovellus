@@ -2,4 +2,3 @@
 
 Ohjelmistotuotanto kurssin miniprojekti
 
-testi
