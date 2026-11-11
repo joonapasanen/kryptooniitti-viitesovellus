@@ -1,0 +1,10 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+db.sqlite3
+__pypackages__/
+*.db
