@@ -1,4 +1,4 @@
-CREATE TABLE references (
+CREATE TABLE "references" (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   content TEXT NOT NULL
 )
