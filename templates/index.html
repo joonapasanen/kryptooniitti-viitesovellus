@@ -6,4 +6,14 @@
 <form action="/create_reference" method="get">
   <button type="submit">Add new book</button>
 </form>
+
+<h2>Created references</h2>
+
+<ul>
+  {% for reference in references %}
+  <li>{{ reference.content }}</li>
+  {% else %}
+  <li>No references created yet.</li>
+  {% endfor %}
+</ul>
 {% endblock %}
