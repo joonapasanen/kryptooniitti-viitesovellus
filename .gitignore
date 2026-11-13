@@ -9,3 +9,10 @@ db.sqlite3
 __pypackages__/
 *.db
 .pytest_cache
+log.html
+output.xml
+report.html
+*.png
+!misc/*.png
+playwright-log.txt
+browser

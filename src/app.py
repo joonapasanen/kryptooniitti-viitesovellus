@@ -1,8 +1,9 @@
-from flask import flash, redirect, render_template, request
+from flask import flash, redirect, render_template, request, jsonify
 
-from config import app
+from config import app, test_env
 from repositories.references_repository import create_reference, get_references
 from util import validate_reference
+from db_helper import reset_db
 
 
 @app.route("/")
@@ -27,3 +28,9 @@ def reference_creation():
     except Exception as error:
         flash(str(error))
         return redirect("/create_reference")
+
+if test_env:
+    @app.route("/reset_db")
+    def reset_database():
+        reset_db()
+        return jsonify({ 'message': "db reset" })
