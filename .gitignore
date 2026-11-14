@@ -16,3 +16,4 @@ report.html
 !misc/*.png
 playwright-log.txt
 browser
+secret.env
