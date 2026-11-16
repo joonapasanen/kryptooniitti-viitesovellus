@@ -30,3 +30,6 @@ Product Backlog:
 
 Sprint 1 Backlog:
 [Sprint 1 Backlog](https://github.com/users/joonapasanen/projects/1/views/2)
+
+OKD-klusteri URL:
+[OKD-klusteri](route-ohjelmistotuotanto-lahiopetus-2026-2.ext.okd-cs-test-0.k8s.cs.helsinki.fi)
