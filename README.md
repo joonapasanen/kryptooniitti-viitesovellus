@@ -24,3 +24,9 @@ Definition of Done määrittely:
 
 Pelisäännöt:
 [Pelisäännöt](https://github.com/joonapasanen/kryptooniitti-viitesovellus/blob/main/pelisaannot.md)
+
+Product Backlog:
+[Product Backlog](https://github.com/users/joonapasanen/projects/1/views/1)
+
+Sprint 1 Backlog:
+[Sprint 1 Backlog](https://github.com/users/joonapasanen/projects/1/views/2)
