@@ -7,8 +7,6 @@ Create a new reference
 {% block body %}
 
 <h2>Create a new reference</h2>
-
-<form action="/create_reference" method="post">
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
@@ -18,12 +16,34 @@ Create a new reference
       </ul>
     {% endif %}
   {% endwith %}
-  <label for="content">Reference:</label>
-  <input type="text" name="content">
-  <br>
-  <button type="submit">
-    Create
-  </button>
-</form>
 
+  <form action="/create_reference" method="get">
+    <select name="r_type">
+      <option value="book" {% if ref_type == "book" %}selected{% endif %}>Book</option>
+      <option value="article" {% if ref_type == "article" %}selected{% endif %}>Article</option>
+    </select>
+    <button type="submit">Choose</button>
+  </form>
+
+  {% if ref_type == "book" %}
+  <form action="/create_reference" method="post">
+    <input type="hidden" name="r_type" value="book">
+    Cite key: <input name="cite_key"><br>
+    Author <input name="author"><br>
+    Title: <input name="title"><br>
+    Publisher: <input name="publisher"><br>
+    Year: <input name="year"><br>
+    <button type="submit">Create</button>
+  </form>
+  {% elif ref_type == "article" %}
+  <form action="/create_reference" method="post">
+    <input type="hidden" name="r_type" value="article">
+    Cite key: <input name="cite_key"><br>
+    Author <input name="author"><br>
+    Title: <input name="title"><br>
+    Journal: <input name="journal"><br>
+    Year: <input name="year"><br>
+    <button type="submit">Create</button>
+  </form>
+  {% endif %}
 {% endblock %}

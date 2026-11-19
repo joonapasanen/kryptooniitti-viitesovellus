@@ -14,20 +14,21 @@ def index():
 
 @app.route("/create_reference")
 def new():
-    return render_template("new_reference.html")
+    ref_type =request.args.get("r_type")
+    return render_template("new_reference.html", ref_type=ref_type)
 
 
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():
-    content = request.form.get("content", "")
+    ref_type = request.form.get("r_type")
 
     try:
-        validate_reference(content)
-        create_reference(content)
+        #validate_reference(content)
+        create_reference(ref_type, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect("/create_reference")
+        return redirect(f"/create_reference?r_type={ref_type}")
 
 
 @app.route("/remove_reference")
