@@ -42,7 +42,7 @@ def remove_reference_page():
 @app.route("/remove_reference/<int:reference_id>", methods=["POST"])
 def reference_removal(reference_id):
     remove_reference(reference_id)
-    return(redirect("/"))
+    return redirect("/")
 
 if test_env:
     @app.route("/reset_db")
