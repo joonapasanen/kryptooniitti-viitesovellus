@@ -17,3 +17,10 @@ def create_reference(content):
         {"content": content},
     )
     db.session.commit()
+
+def remove_reference(reference_id):
+    db.session.execute(
+        text('DELETE FROM "references" WHERE id = :id'),
+        {"id": reference_id},
+    )
+    db.session.commit()

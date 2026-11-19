@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, request, jsonify
 
 from config import app, test_env
-from repositories.references_repository import create_reference, get_references
+from repositories.references_repository import create_reference, get_references, remove_reference
 from util import validate_reference
 from db_helper import reset_db
 
@@ -28,6 +28,21 @@ def reference_creation():
     except Exception as error:
         flash(str(error))
         return redirect("/create_reference")
+
+
+@app.route("/remove_reference")
+def remove_reference_page():
+    references = get_references()
+    return render_template(
+        "remove_reference.html",
+        references=references,
+    )
+
+
+@app.route("/remove_reference/<int:reference_id>", methods=["POST"])
+def reference_removal(reference_id):
+    remove_reference(reference_id)
+    return(redirect("/"))
 
 if test_env:
     @app.route("/reset_db")

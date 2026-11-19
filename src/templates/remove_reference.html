@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Remove reference
+{% endblock %}
+
+{% block body %}
+
+<h2>Remove reference</h2>
+
+{% for reference in references %}
+    <form action="/remove_reference/{{ reference.id }}" method="POST">
+        <input type="text" value="{{ reference.content }}" readonly>
+        <button type="submit">Remove</button>
+    </form>
+{% else %}
+    <p>No references to remove.</p>
+{% endfor %}
+
+{% endblock %}
