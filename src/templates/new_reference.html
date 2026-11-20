@@ -7,8 +7,6 @@ Create a new reference
 {% block body %}
 
 <h2>Create a new reference</h2>
-
-<form action="/create_reference" method="post">
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
@@ -18,12 +16,54 @@ Create a new reference
       </ul>
     {% endif %}
   {% endwith %}
-  <label for="content">Reference:</label>
-  <input type="text" name="content">
-  <br>
-  <button type="submit">
-    Create
-  </button>
-</form>
 
+  <form action="/create_reference" method="get">
+    <label for="r_type">Reference type:</label>
+    <select id="r_type" name="r_type">
+      <option value="book" {% if ref_type == "book" %}selected{% endif %}>Book</option>
+      <option value="article" {% if ref_type == "article" %}selected{% endif %}>Article</option>
+    </select>
+
+    <label for="author_count">Number of authors:</label>
+    <select id="author_count" name="author_count">
+      {% for count in range(1, 11) %}
+      <option value="{{ count }}" {% if author_count == count %}selected{% endif %}>{{ count }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Choose</button>
+  </form>
+
+  <p>
+  Enter one author per field in the format <strong>Last name, First name</strong>
+  (for example, <strong>Doe, Jane</strong>).
+  If you want to omit the remaining authors, type <strong>others</strong>
+  in the last field instead of a name.
+  If there are more than 10 authors, enter the first 9 names and type
+  <strong>others</strong> in the 10th field.
+  </p>
+  {% if ref_type == "book" %}
+  <form action="/create_reference" method="post">
+    <input type="hidden" name="r_type" value="book">
+    Cite key: <input name="cite_key" required><br>
+    {% for author_number in range(1, author_count + 1) %}
+    Author {{ author_number }}: <input name="author" required><br>
+    {% endfor %}
+    Title: <input name="title" required><br>
+    Publisher: <input name="publisher" required><br>
+    Year: <input name="year" required pattern="[0-9]{4}" inputmode="numeric" title="Enter exactly 4 digits"><br>
+    <button type="submit">Create</button>
+  </form>
+  {% elif ref_type == "article" %}
+  <form action="/create_reference" method="post">
+    <input type="hidden" name="r_type" value="article">
+    Cite key: <input name="cite_key" required><br>
+    {% for author_number in range(1, author_count + 1) %}
+    Author {{ author_number }}: <input name="author" required><br>
+    {% endfor %}
+    Title: <input name="title" required><br>
+    Journal: <input name="journal" required><br>
+    Year: <input name="year" required pattern="[0-9]{4}" inputmode="numeric" title="Enter exactly 4 digits"><br>
+    <button type="submit">Create</button>
+  </form>
+  {% endif %}
 {% endblock %}

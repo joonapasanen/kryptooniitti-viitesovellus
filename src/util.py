@@ -1,5 +1,14 @@
+import re
+
+
 class UserInputError(Exception):
     pass
+
+
+def validate_year(year):
+    if not re.fullmatch(r"[0-9]{4}", year or ""):
+        raise UserInputError("Year must contain exactly 4 digits")
+
 
 def validate_reference(content):
     if len(content) < 5:

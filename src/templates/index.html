@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>Hello from Kryptoniitti-viitesovellus</p>
+<p>Hello from Kryptoniitti-viitesovellus!</p>
 
 <form action="/create_reference" method="get">
-  <button type="submit">Add new book</button>
+  <button type="submit">Add new reference</button>
 </form>
 
 <form action="/remove_reference" method="get">
@@ -13,9 +13,12 @@
 
 <h2>Created references</h2>
 
-<ul>
+<ul style="list-style: none; padding: 0;">
   {% for reference in references %}
-  <li>{{ reference.content }}</li>
+  <li style="border: 2px solid #333; margin: 12px 0; padding: 12px;">
+    <strong>{{ reference.cite_key }}</strong><br>
+    <strong>{{ reference.author }}</strong>
+  </li>
   {% else %}
   <li>No references created yet.</li>
   {% endfor %}
