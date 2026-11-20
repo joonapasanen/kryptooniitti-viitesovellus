@@ -14,8 +14,18 @@ def index():
 
 @app.route("/create_reference")
 def new():
-    ref_type =request.args.get("r_type")
-    return render_template("new_reference.html", ref_type=ref_type)
+    ref_type = request.args.get("r_type")
+
+    try:
+        author_count = max(1, min(int(request.args.get("author_count", 1)), 10))
+    except (TypeError, ValueError):
+        author_count = 1
+
+    return render_template(
+        "new_reference.html",
+        ref_type=ref_type,
+        author_count=author_count,
+    )
 
 
 @app.route("/create_reference", methods=["POST"])
@@ -28,7 +38,10 @@ def reference_creation():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect(f"/create_reference?r_type={ref_type}")
+        author_count = max(1, len(request.form.getlist("author")))
+        return redirect(
+            f"/create_reference?r_type={ref_type}&author_count={author_count}"
+        )
 
 
 @app.route("/remove_reference")
