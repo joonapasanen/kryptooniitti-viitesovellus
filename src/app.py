@@ -2,7 +2,6 @@ from flask import flash, redirect, render_template, request, jsonify
 
 from config import app, test_env
 from repositories.references_repository import create_reference, get_references, remove_reference
-from util import validate_reference
 from db_helper import reset_db
 
 
@@ -33,7 +32,6 @@ def reference_creation():
     ref_type = request.form.get("r_type")
 
     try:
-        #validate_reference(content)
         create_reference(ref_type, request.form)
         return redirect("/")
     except Exception as error:
