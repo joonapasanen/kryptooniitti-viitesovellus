@@ -39,7 +39,7 @@ def create_reference(ref_type, form):
     if not authors:
         raise Exception("At least one author is required")
 
-    author = "; ".join(authors)
+    author = " and ".join(authors)
     parameters["author"] = author
     parameters["r_type"] = ref_type
     parameters["content"] = f"{author}: {form.get('title')}"

@@ -33,6 +33,14 @@ Create a new reference
     <button type="submit">Choose</button>
   </form>
 
+  <p>
+  Enter one author per field in the format <strong>Last name, First name</strong>
+  (for example, <strong>Doe, Jane</strong>).
+  If you want to omit the remaining authors, type <strong>others</strong>
+  in the last field instead of a name.
+  If there are more than 10 authors, enter the first 9 names and type
+  <strong>others</strong> in the 10th field.
+  </p>
   {% if ref_type == "book" %}
   <form action="/create_reference" method="post">
     <input type="hidden" name="r_type" value="book">
