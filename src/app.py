@@ -1,8 +1,9 @@
-from flask import flash, redirect, render_template, request, jsonify
+from flask import flash, redirect, render_template, request, jsonify, Response
 
 from config import app, test_env
 from repositories.references_repository import create_reference, get_references, remove_reference
 from db_helper import reset_db
+from bibtex import references_to_bibtex
 
 
 @app.route("/")
@@ -55,6 +56,16 @@ def remove_reference_page():
 def reference_removal(reference_id):
     remove_reference(reference_id)
     return redirect("/")
+
+
+@app.route("/references.bib")
+def export_bibtex():
+    content = references_to_bibtex(get_references())
+    return Response(
+        content,
+        mimetype="application/x-bibtex",
+        headers={"Content-Disposition": "attachment; filename=references.bib"},
+    )
 
 if test_env:
     @app.route("/reset_db")

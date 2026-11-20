@@ -10,7 +10,8 @@ FIELDS = ["cite_key", "author", "title", "year", "publisher", "journal"]
 def get_references():
     result = db.session.execute(
         text(
-            'SELECT id, cite_key, author, content '
+            'SELECT id, cite_key, author, content, '
+            'r_type, title, year, publisher, journal '
             'FROM "references" ORDER BY id'
         )
     )
@@ -20,6 +21,11 @@ def get_references():
             reference.cite_key,
             reference.author,
             reference.content,
+            r_type=reference.r_type,
+            title=reference.title,
+            year=reference.year,
+            publisher=reference.publisher,
+            journal=reference.journal,
         )
         for reference in result
     ]

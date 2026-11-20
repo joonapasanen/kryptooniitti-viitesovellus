@@ -1,9 +1,18 @@
-class Reference:
-    def __init__(self, id, cite_key, author, content):
-        self.id = id
-        self.cite_key = cite_key
-        self.author = author
-        self.content = content
+from dataclasses import dataclass
+
+
+@dataclass
+class Reference:  # pylint: disable=too-many-instance-attributes
+    id: int
+    cite_key: str
+    author: str
+    content: str
+    # BibTeX fields
+    r_type: str | None = None
+    title: str | None = None
+    year: int | None = None
+    publisher: str | None = None
+    journal: str | None = None
 
     def __str__(self):
         return self.content
