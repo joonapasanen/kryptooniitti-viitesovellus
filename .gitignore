@@ -17,3 +17,4 @@ report.html
 playwright-log.txt
 browser
 secret.env
+*.bib
