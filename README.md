@@ -30,6 +30,8 @@ Product Backlog:
 
 Sprint 1 Backlog:
 [Sprint 1 Backlog](https://github.com/users/joonapasanen/projects/1/views/2)
+
+Sprint 2 Backlog:
 [Sprint 2 Backlog](https://github.com/users/joonapasanen/projects/1/views/3)
 
 OKD-klusteri URL:
