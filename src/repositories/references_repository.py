@@ -4,7 +4,17 @@ from config import db
 from entities.references import Reference
 from util import UserInputError, validate_year
 
-FIELDS = ["cite_key", "author", "title", "year", "publisher", "journal"]
+FIELDS = [
+    "cite_key",
+    "author",
+    "title",
+    "year",
+    "publisher",
+    "journal",
+    "booktitle",
+    "pages",
+    "volume"
+]
 
 
 def build_filter_conditions(filters):
@@ -28,7 +38,8 @@ def get_references(filters=None):
     result = db.session.execute(
         text(
             'SELECT id, cite_key, author, content, '
-            'r_type, title, year, publisher, journal '
+            'r_type, title, year, publisher, journal, '
+            'booktitle, pages, volume '
             f'FROM "references" {where}ORDER BY id'
         ),
         parameters,
@@ -44,12 +55,15 @@ def get_references(filters=None):
             year=reference.year,
             publisher=reference.publisher,
             journal=reference.journal,
+            booktitle=reference.booktitle,
+            pages=reference.pages,
+            volume=reference.volume,
         )
         for reference in result
     ]
 
 def validate_reference_type(ref_type):
-    if ref_type not in ("book", "article"):
+    if ref_type not in ("book", "article", "inproceedings"):
         raise UserInputError("Unknown reference type error")
 
 
@@ -73,16 +87,24 @@ def prepare_reference_data(ref_type, form):
     parameters["author"] = author
     parameters["r_type"] = ref_type
     parameters["content"] = f"{author}: {form.get('title')}"
+    if ref_type == "article":
+        start = (form.get("pages_start") or "").strip()
+        end = (form.get("pages_end") or "").strip()
+
+        if not start or not end:
+            raise UserInputError("Both page numbers are required")
+
+        parameters["pages"] = f"{start}--{end}"
     return parameters
 
 
 def create_reference(ref_type, form):
     parameters = prepare_reference_data(ref_type, form)
-
     db.session.execute(
         text("""INSERT INTO "references"
-            (content, r_type, cite_key, author, title, year, publisher, journal)
-            VALUES (:content, :r_type, :cite_key, :author, :title, :year, :publisher, :journal)"""),
+            (content, r_type, cite_key, author, title, year, publisher, journal, booktitle, pages, volume)
+            VALUES (:content, :r_type, :cite_key, :author, :title, :year, :publisher, :journal,
+            :booktitle, :pages, :volume)"""),
             parameters,
     )
     db.session.commit()
