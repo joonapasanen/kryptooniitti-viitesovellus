@@ -22,6 +22,7 @@ Create a new reference
     <select id="r_type" name="r_type">
       <option value="book" {% if ref_type == "book" %}selected{% endif %}>Book</option>
       <option value="article" {% if ref_type == "article" %}selected{% endif %}>Article</option>
+      <option value="inproceedings" {% if ref_type == "inproceedings" %}selected{% endif %}>Inproceedings</option>
     </select>
 
     <label for="author_count">Number of authors:</label>
@@ -62,6 +63,23 @@ Create a new reference
     {% endfor %}
     Title: <input name="title" required><br>
     Journal: <input name="journal" required><br>
+    Volume: <input name="volume" required><br>
+    Pages:
+    <input name="pages_start" required aria-label="First page">
+    &ndash;
+    <input name="pages_end" required aria-label="Last page"><br>
+    Year: <input name="year" required pattern="[0-9]{4}" inputmode="numeric" title="Enter exactly 4 digits"><br>
+    <button type="submit">Create</button>
+  </form>
+  {% elif ref_type == "inproceedings" %}
+  <form action="/create_reference" method="post">
+    <input type="hidden" name="r_type" value="inproceedings">
+    Cite key: <input name="cite_key" required><br>
+    {% for author_number in range(1, author_count + 1) %}
+    Author {{ author_number }}: <input name="author" required><br>
+    {% endfor %}
+    Title: <input name="title" required><br>
+    Booktitle: <input name="booktitle" required><br>
     Year: <input name="year" required pattern="[0-9]{4}" inputmode="numeric" title="Enter exactly 4 digits"><br>
     <button type="submit">Create</button>
   </form>

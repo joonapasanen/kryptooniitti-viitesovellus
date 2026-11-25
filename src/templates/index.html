@@ -20,8 +20,20 @@
 <ul style="list-style: none; padding: 0;">
   {% for reference in references %}
   <li style="border: 2px solid #333; margin: 12px 0; padding: 12px;">
-    <strong>{{ reference.cite_key }}</strong><br>
-    <strong>{{ reference.author }}</strong>
+    <strong>Cite key:</strong> {{ reference.cite_key }}<br>
+    <strong>Author:</strong> {{ reference.author }}<br>
+    <strong>Title:</strong> {{ reference.title }}<br>
+    {% if reference.r_type == "book" %}
+    <strong>Publisher:</strong> {{ reference.publisher }}<br>
+    {% elif reference.r_type == "article" %}
+    <strong>Journal:</strong> {{ reference.journal }}<br>
+    <strong>Volume:</strong> {{ reference.volume }}<br>
+    <strong>Pages:</strong> {{ reference.pages }}<br>
+    {% endif %}
+    <strong>Year:</strong> {{ reference.year }}<br>
+    {% if reference.r_type == "inproceedings" %}
+    <strong>Booktitle:</strong> {{ reference.booktitle }}<br>
+    {% endif %} 
     <a href="{{ url_for('modify_reference', reference_id=reference.id) }}">Modify reference</a>
   </li>
   {% else %}
