@@ -1,9 +1,12 @@
-from flask import flash, redirect, render_template, request, jsonify, Response
+from flask import Response, flash, jsonify, redirect, render_template, request
 
-from config import app, test_env
-from repositories.references_repository import create_reference, get_references, remove_reference, update_reference
-from db_helper import reset_db
 from bibtex import references_to_bibtex
+from config import app, test_env
+from db_helper import reset_db
+from repositories.references_repository import (create_reference,
+                                                get_references,
+                                                remove_reference,
+                                                update_reference)
 
 
 @app.route("/")
@@ -82,6 +85,12 @@ def modify_reference(reference_id):
             )
 
     return render_template("modify_reference.html", reference=reference)
+
+
+@app.route("/filter")
+def filter_references():
+    references = get_references(request.args)
+    return render_template("filter.html", references=references)
 
 
 @app.route("/references.bib")

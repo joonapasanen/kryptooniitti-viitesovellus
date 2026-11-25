@@ -7,13 +7,31 @@ from util import UserInputError, validate_year
 FIELDS = ["cite_key", "author", "title", "year", "publisher", "journal"]
 
 
-def get_references():
+def build_filter_conditions(filters):
+    conditions = []
+    parameters = {}
+    for field in ("r_type", "year"):
+        if filters.get(field):
+            conditions.append(f"{field} = :{field}")
+            parameters[field] = filters[field]
+    for field in ("author", "title"):
+        if filters.get(field):
+            conditions.append(f"{field} LIKE :{field}")
+            parameters[field] = f"%{filters[field]}%"
+
+    where = f"WHERE {' AND '.join(conditions)} " if conditions else ""
+    return where, parameters
+
+
+def get_references(filters=None):
+    where, parameters = build_filter_conditions(filters or {})
     result = db.session.execute(
         text(
             'SELECT id, cite_key, author, content, '
             'r_type, title, year, publisher, journal '
-            'FROM "references" ORDER BY id'
-        )
+            f'FROM "references" {where}ORDER BY id'
+        ),
+        parameters,
     )
     return [
         Reference(
