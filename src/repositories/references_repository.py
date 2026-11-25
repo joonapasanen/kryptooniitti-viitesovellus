@@ -111,7 +111,7 @@ def update_reference(reference_id, form):
         raise UserInputError("Reference not found")
 
     db.session.commit()
-    
+
 def remove_reference(reference_id):
     db.session.execute(
         text('DELETE FROM "references" WHERE id = :id'),
