@@ -29,6 +29,15 @@ Filter references
   <button type="submit">Back to front page</button>
 </form>
 
+<form action="/references.bib" method="get">
+  {% for field in ("r_type", "author", "title", "year") %}
+  {% if request.args.get(field) %}
+  <input type="hidden" name="{{ field }}" value="{{ request.args.get(field) }}">
+  {% endif %}
+  {% endfor %}
+  <button type="submit">Download BibTeX</button>
+</form>
+
 <h2>Results</h2>
 
 <ul style="list-style: none; padding: 0;">

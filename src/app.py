@@ -95,7 +95,7 @@ def filter_references():
 
 @app.route("/references.bib")
 def export_bibtex():
-    content = references_to_bibtex(get_references())
+    content = references_to_bibtex(get_references(request.args))
     return Response(
         content,
         mimetype="application/x-bibtex",
