@@ -78,6 +78,17 @@ def prepare_authors(form):
     return " and ".join(authors)
 
 
+def prepare_pages(form):
+    start = (form.get("pages_start") or "").strip()
+    end = (form.get("pages_end") or "").strip()
+
+    if start and end:
+        return f"{start}--{end}"
+    if start or end:
+        raise UserInputError("Enter both page numbers or leave both empty")
+    return None
+
+
 def prepare_reference_data(ref_type, form):
     validate_reference_type(ref_type)
     validate_year(form.get("year"))
@@ -88,15 +99,7 @@ def prepare_reference_data(ref_type, form):
     parameters["r_type"] = ref_type
     parameters["content"] = f"{author}: {form.get('title')}"
     if ref_type == "article":
-        start = (form.get("pages_start") or "").strip()
-        end = (form.get("pages_end") or "").strip()
-
-        if start and end:
-            parameters["pages"] = f"{start}--{end}"
-        elif start or end:
-            raise UserInputError("Enter both page numbers or leave both empty")
-        else:
-            parameters["pages"] = None
+        parameters["pages"] = prepare_pages(form)
     return parameters
 
 
