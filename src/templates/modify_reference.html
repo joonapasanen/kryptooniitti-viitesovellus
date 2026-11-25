@@ -14,30 +14,30 @@
     <form method="post">
         <input type="hidden" name="r_type" value="{{ reference.r_type }}">
 
-        <label for="cite_key">Viitteen tunniste</label>
+        <label for="cite_key">Cite key</label>
         <input id="cite_key" name="cite_key"
                value="{{ form_data.get('cite_key', reference.cite_key) if form_data else reference.cite_key }}"
                required>
 
-        <label for="author">Tekijät</label>
+        <label for="author">Authors</label>
         <input id="author" name="author"
                value="{{ form_data.get('author', reference.author) if form_data else reference.author }}"
                required>
 
-        <label for="title">Otsikko</label>
+        <label for="title">Title</label>
         <input id="title" name="title"
                value="{{ form_data.get('title', reference.title) if form_data else reference.title }}"
                required>
 
-        <label for="year">Vuosi</label>
+        <label for="year">Year</label>
         <input id="year" name="year"
                value="{{ form_data.get('year', reference.year) if form_data else reference.year }}">
 
-        <label for="publisher">Julkaisija</label>
+        <label for="publisher">Publisher</label>
         <input id="publisher" name="publisher"
                value="{{ form_data.get('publisher', reference.publisher) if form_data else reference.publisher }}">
 
-        <label for="journal">Lehti</label>
+        <label for="journal">Journal</label>
         <input id="journal" name="journal"
                value="{{ form_data.get('journal', reference.journal) if form_data else reference.journal }}">
 
