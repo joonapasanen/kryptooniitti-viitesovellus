@@ -2,7 +2,7 @@
 Resource          resource.robot
 Suite Setup       Open And Configure Browser
 Suite Teardown    Close Browser
-Test Setup        Reset Todos
+Test Setup        Reset Database
 
 
 *** Test Cases ***
@@ -68,3 +68,4 @@ Test All Reference Types
     Get Text    ul li:has-text("Martin09")    contains    Clean Code: A Handbook of Agile Software Craftsmanship
     Get Text    ul li:has-text("Martin09")    contains    2008
     Get Text    ul li:has-text("Martin09")    contains    Prentice Hall
+

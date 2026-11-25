@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Filter references
+{% endblock %}
+
+{% block body %}
+
+<h2>Filter references</h2>
+
+<form action="/filter" method="get">
+  <label for="r_type">Reference type:</label>
+  <select id="r_type" name="r_type">
+    <option value="" {% if not request.args.get("r_type") %}selected{% endif %}>All</option>
+    <option value="book" {% if request.args.get("r_type") == "book" %}selected{% endif %}>Book</option>
+    <option value="article" {% if request.args.get("r_type") == "article" %}selected{% endif %}>Article</option>
+  </select><br>
+  Author: <input name="author" value="{{ request.args.get('author', '') }}"><br>
+  Title: <input name="title" value="{{ request.args.get('title', '') }}"><br>
+  Year: <input name="year" value="{{ request.args.get('year', '') }}" pattern="[0-9]{4}" inputmode="numeric" title="Enter exactly 4 digits"><br>
+  <button type="submit">Filter</button>
+</form>
+
+<form action="/filter" method="get">
+  <button type="submit">Clear filters</button>
+</form>
+
+<form action="/" method="get">
+  <button type="submit">Back to front page</button>
+</form>
+
+<form action="/references.bib" method="get">
+  {% for field in ("r_type", "author", "title", "year") %}
+  {% if request.args.get(field) %}
+  <input type="hidden" name="{{ field }}" value="{{ request.args.get(field) }}">
+  {% endif %}
+  {% endfor %}
+  <button type="submit">Download BibTeX</button>
+</form>
+
+<h2>Results</h2>
+
+<ul style="list-style: none; padding: 0;">
+  {% for reference in references %}
+  <li style="border: 2px solid #333; margin: 12px 0; padding: 12px;">
+    <strong>{{ reference.cite_key }}</strong><br>
+    <strong>{{ reference.author }}</strong><br>
+    {{ reference.title }} ({{ reference.year }})
+  </li>
+  {% else %}
+  <li>No references match the filters.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

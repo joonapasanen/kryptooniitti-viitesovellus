@@ -33,3 +33,7 @@ jobs:
         run: bash run_robot_tests.sh
       - name: Code quality check (pylint)
         run: uv run pylint src 
+      - name: run code coverage report
+        run: uv run coverage run -m pytest src
+      - name: generate coverage report
+        run: uv run coverage xml
