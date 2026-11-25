@@ -18,3 +18,5 @@ playwright-log.txt
 browser
 secret.env
 *.bib
+.coverage
+htmlcov
