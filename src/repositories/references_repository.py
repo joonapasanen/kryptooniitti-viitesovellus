@@ -69,6 +69,31 @@ def create_reference(ref_type, form):
     )
     db.session.commit()
 
+def update_reference(reference_id, form):
+    ref_type = form.get("r_type")
+    parameters = prepare_reference_data(ref_type, form)
+    parameters["id"] = reference_id
+
+    result = db.session.execute(
+        text("""UPDATE "references"
+            SET content = :content,
+                r_type = :r_type,
+                cite_key = :cite_key,
+                author = :author,
+                title = :title,
+                year = :year,
+                publisher = :publisher,
+                journal = :journal
+            WHERE id = :id"""),
+        parameters,
+    )
+
+    if result.rowcount == 0:
+        db.session.rollback()
+        raise UserInputError("Reference not found")
+
+    db.session.commit()
+    
 def remove_reference(reference_id):
     db.session.execute(
         text('DELETE FROM "references" WHERE id = :id'),

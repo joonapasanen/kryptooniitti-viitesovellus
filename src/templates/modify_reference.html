@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fi">
+<head>
+    <meta charset="utf-8">
+    <title>Modify references</title>
+</head>
+<body>
+    <h1>Modify references</h1>
+
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <form method="post">
+        <input type="hidden" name="r_type" value="{{ reference.r_type }}">
+
+        <label for="cite_key">Viitteen tunniste</label>
+        <input id="cite_key" name="cite_key"
+               value="{{ form_data.get('cite_key', reference.cite_key) if form_data else reference.cite_key }}"
+               required>
+
+        <label for="author">Tekijät</label>
+        <input id="author" name="author"
+               value="{{ form_data.get('author', reference.author) if form_data else reference.author }}"
+               required>
+
+        <label for="title">Otsikko</label>
+        <input id="title" name="title"
+               value="{{ form_data.get('title', reference.title) if form_data else reference.title }}"
+               required>
+
+        <label for="year">Vuosi</label>
+        <input id="year" name="year"
+               value="{{ form_data.get('year', reference.year) if form_data else reference.year }}">
+
+        <label for="publisher">Julkaisija</label>
+        <input id="publisher" name="publisher"
+               value="{{ form_data.get('publisher', reference.publisher) if form_data else reference.publisher }}">
+
+        <label for="journal">Lehti</label>
+        <input id="journal" name="journal"
+               value="{{ form_data.get('journal', reference.journal) if form_data else reference.journal }}">
+
+        <button type="submit">Tallenna</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">Peruuta</a>
+</body>
+</html>

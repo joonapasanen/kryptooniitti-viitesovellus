@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, request, jsonify, Response
 
 from config import app, test_env
-from repositories.references_repository import create_reference, get_references, remove_reference
+from repositories.references_repository import create_reference, get_references, remove_reference, update_reference
 from db_helper import reset_db
 from bibtex import references_to_bibtex
 
@@ -56,6 +56,32 @@ def remove_reference_page():
 def reference_removal(reference_id):
     remove_reference(reference_id)
     return redirect("/")
+
+
+@app.route("/modify_reference/<int:reference_id>", methods=["GET", "POST"])
+def modify_reference(reference_id):
+    reference = next(
+        (item for item in get_references() if item.id == reference_id),
+        None,
+    )
+
+    if reference is None:
+        flash("Reference not found")
+        return redirect("/")
+
+    if request.method == "POST":
+        try:
+            update_reference(reference_id, request.form)
+            return redirect("/")
+        except Exception as error:
+            flash(str(error))
+            return render_template(
+                "modify_reference.html",
+                reference=reference,
+                form_data=request.form,
+            )
+
+    return render_template("modify_reference.html", reference=reference)
 
 
 @app.route("/references.bib")
