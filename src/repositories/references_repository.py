@@ -91,10 +91,12 @@ def prepare_reference_data(ref_type, form):
         start = (form.get("pages_start") or "").strip()
         end = (form.get("pages_end") or "").strip()
 
-        if not start or not end:
-            raise UserInputError("Both page numbers are required")
-
-        parameters["pages"] = f"{start}--{end}"
+        if start and end:
+            parameters["pages"] = f"{start}--{end}"
+        elif start or end:
+            raise UserInputError("Enter both page numbers or leave both empty")
+        else:
+            parameters["pages"] = None
     return parameters
 
 

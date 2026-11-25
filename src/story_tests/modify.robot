@@ -14,7 +14,7 @@ Create And Modify Reference, Check Reference
     Reference Should Be Listed    Author One
     Reference Should Be Listed    Author Two
 
-    Click    xpath=//li[.//strong[normalize-space(.)="book1"]]//a
+    Click    xpath=//li[contains(., "book1")]//a
     Fill Text    input[name="author"]    Modified Author
     Click    button[type="submit"]
 
