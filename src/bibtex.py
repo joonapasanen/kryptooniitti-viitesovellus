@@ -1,5 +1,4 @@
-BIBTEX_FIELDS = ["author", "title", "journal", "publisher", "year"]
-
+BIBTEX_FIELDS = ["author", "title", "journal", "publisher", "booktitle", "year"]
 # LaTeX special characters that would break a .bib file if left as-is
 SPECIAL_CHARACTERS = {
     "\\": r"\textbackslash{}",

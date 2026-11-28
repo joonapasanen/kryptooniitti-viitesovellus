@@ -1,5 +1,7 @@
 import unittest
 from util import validate_reference, validate_year, UserInputError
+from entities.references import Reference
+
 
 class TestReferenceValidator(unittest.TestCase):
     def test_long_reference_error(self):
@@ -23,3 +25,8 @@ class TestReferenceValidator(unittest.TestCase):
     def test_year_not_integer(self):
         with self.assertRaises(UserInputError):
             validate_year("abcd")
+
+class TestReference(unittest.TestCase):
+    def test_str_returns_content(self):
+        reference = Reference(1, "key", "Ada", "Ada: Example")
+        self.assertEqual(str(reference), "Ada: Example")

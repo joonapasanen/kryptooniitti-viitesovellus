@@ -25,6 +25,16 @@ def make_article(**overrides):
     fields.update(overrides)
     return Reference(2, "Knuth1974", "Donald Knuth", "content", **fields)
 
+def make_inproceedings(**overrides):
+    fields = {
+        "r_type": "inproceedings",
+        "title": "Structured Programming",
+        "year": 1974,
+        "booktitle": "Proceedings of the ACM Conference",
+    }
+    fields.update(overrides)
+    return Reference(3, "Knuth1974Conference", "Donald Knuth", "content", **fields)
+
 
 class TestEscape(unittest.TestCase):
     def test_plain_text_is_unchanged(self):
@@ -62,6 +72,17 @@ class TestReferenceToBibtex(unittest.TestCase):
             "}"
         )
         self.assertEqual(reference_to_bibtex(make_article()), expected)
+
+    def test_inproceedings(self):
+        expected = (
+            "@inproceedings{Knuth1974Conference,\n"
+            "  author = {Donald Knuth},\n"
+            "  title = {Structured Programming},\n"
+            "  booktitle = {Proceedings of the ACM Conference},\n"
+            "  year = {1974},\n"
+            "}"
+        )
+        self.assertEqual(reference_to_bibtex(make_inproceedings()), expected)
 
     def test_missing_fields_are_omitted(self):
         result = reference_to_bibtex(make_book(publisher=None))

@@ -14,6 +14,7 @@ Filter references
     <option value="" {% if not request.args.get("r_type") %}selected{% endif %}>All</option>
     <option value="book" {% if request.args.get("r_type") == "book" %}selected{% endif %}>Book</option>
     <option value="article" {% if request.args.get("r_type") == "article" %}selected{% endif %}>Article</option>
+    <option value="inproceedings" {% if request.args.get("r_type") == "inproceedings" %}selected{% endif %}>Inproceedings</option>
   </select><br>
   Author: <input name="author" value="{{ request.args.get('author', '') }}"><br>
   Title: <input name="title" value="{{ request.args.get('title', '') }}"><br>

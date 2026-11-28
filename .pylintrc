@@ -18,8 +18,8 @@ disable=raw-checker-failed,
         missing-class-docstring,
         broad-exception-caught, #Exception in app.py
         redefined-builtin, #references.py id 
-        too-few-public-methods #references.py class
-
+        too-few-public-methods, #references.py class
+        import-error
 [FORMAT]
 
 [REFRACTORING]
